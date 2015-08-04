@@ -1,0 +1,13 @@
+{% extends '@App/common/app.html.twig' %}
+{% block header %} Categories {% endblock %}
+{% block content %}
+    {% for category in categories %}
+        <ul class="tree" style="width: 200px; ">
+            {% include 'catalog/category/tree-node.html.twig'
+            with {category:category} %}
+        </ul>
+    {% endfor %}
+{% endblock %}
+{% block footer %}
+    <a href="{{ path('catalog_index') }}">Back to catalog</a>
+{% endblock %}
