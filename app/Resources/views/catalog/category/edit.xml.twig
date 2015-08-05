@@ -1,3 +1,10 @@
+<script>
+    $('.fake').click(function(e){
+        e.preventDefault();
+        alert('Changes have been saved. (not)');
+    });
+</script>
+
 <form method="post">
     <input type="hidden" value="{{ category.id }}" />
     <table border="1">
@@ -33,5 +40,6 @@
             </td>
         </tr>
     </table>
-    <input type="submit" value="save"/>
+    <input type="submit" value="save" class="fake"/>
 </form>
+

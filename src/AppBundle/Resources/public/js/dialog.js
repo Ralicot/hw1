@@ -1,8 +1,8 @@
 $(function() {
-    var otherw = $('#dialog-out').dialog({autoOpen: false, modal: true});
     $('.dialog').click(function (e) {
-        console.log('eh');
         e.preventDefault();
+        var otherw = $('#dialog-out').dialog({autoOpen: false, modal: true});
+        console.log('eh');
         page = this.href;
         $.ajax({
             url: this.href,
@@ -14,5 +14,9 @@ $(function() {
             }
         });
     });
+
 });
+
+
+
 

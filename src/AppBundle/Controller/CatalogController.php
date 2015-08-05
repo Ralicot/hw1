@@ -43,6 +43,7 @@ class CatalogController extends Controller
 
         if ($request->isXmlHttpRequest())
             return $this->render('catalog/category/edit.xml.twig', $arguments);
+        return $this->render('catalog/category/edit.html.twig', $arguments);
     }
     public function saveCategoryAction($categoryId)
     {
