@@ -1,3 +1,2 @@
-catalog:
-  prefix: /catalog
-  resource: "@AppBundle/Resources/config/routing/catalog.yml"
+app:
+  resource: "@AppBundle/Resources/config/routing.yml"
