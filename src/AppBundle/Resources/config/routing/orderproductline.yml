@@ -1,0 +1,30 @@
+orderproductline:
+    path:     /
+    defaults: { _controller: "AppBundle:OrderProductLine:index" }
+
+orderproductline_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:OrderProductLine:show" }
+
+orderproductline_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:OrderProductLine:new" }
+
+orderproductline_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:OrderProductLine:create" }
+    methods:  POST
+
+orderproductline_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:OrderProductLine:edit" }
+
+orderproductline_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:OrderProductLine:update" }
+    methods:  [POST, PUT]
+
+orderproductline_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:OrderProductLine:delete" }
+    methods:  [POST, DELETE]

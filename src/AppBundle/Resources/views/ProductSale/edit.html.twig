@@ -1,0 +1,15 @@
+    {% extends 'common/app.html.twig' %}
+    {% block header %}
+    <h1>ProductSale edit</h1>
+    {% endblock %}
+    {% block content %}
+    {{ form(edit_form) }}
+        <div class="record-actions">
+    <a class="button" href="{{ path('productsale') }}">
+        Back to the list
+    </a>
+                <div style="float:left">
+            {{ form(delete_form) }}
+        </div>
+        <div style="clear:both"></div>
+    </div>    {% endblock %}

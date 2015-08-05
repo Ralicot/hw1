@@ -1,0 +1,45 @@
+{% extends 'common/app.html.twig' %}
+    {% block header %}<h1>ProductAcquisition list</h1>{% endblock %}
+    {% block content %}
+        <table class="records_list">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>
+                        <a href="{{ path('productacquisition_show', { 'id': entity.id }) }}">
+                            {{ entity.id }}</a>
+                    </td>
+                    <td>{% if entity.date %}
+                            {{ entity.date|date('Y-m-d H:i:s') }}
+                        {% endif %}</td>
+                    <td>{{ entity.quantity }}</td>
+                    <td>{{ entity.price }}</td>
+                    <td>
+                        <div class="actions"><a class="button"
+                                                href="{{ path('productacquisition_show', { 'id': entity.id }) }}">
+                                show
+                            </a> <a class="button" href="{{ path('productacquisition_edit', { 'id': entity.id }) }}">
+                                edit
+                            </a>
+
+
+
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a class="button" href="{{ path('productacquisition_new') }}">
+            New ProductAcquisition
+        </a>
+    {% endblock %}

@@ -1,0 +1,30 @@
+vendor:
+    path:     /
+    defaults: { _controller: "AppBundle:Vendor:index" }
+
+vendor_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:Vendor:show" }
+
+vendor_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:Vendor:new" }
+
+vendor_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:Vendor:create" }
+    methods:  POST
+
+vendor_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Vendor:edit" }
+
+vendor_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:Vendor:update" }
+    methods:  [POST, PUT]
+
+vendor_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:Vendor:delete" }
+    methods:  [POST, DELETE]

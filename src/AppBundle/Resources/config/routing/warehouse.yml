@@ -1,0 +1,30 @@
+warehouse:
+    path:     /
+    defaults: { _controller: "AppBundle:Warehouse:index" }
+
+warehouse_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:Warehouse:show" }
+
+warehouse_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:Warehouse:new" }
+
+warehouse_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:Warehouse:create" }
+    methods:  POST
+
+warehouse_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Warehouse:edit" }
+
+warehouse_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:Warehouse:update" }
+    methods:  [POST, PUT]
+
+warehouse_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:Warehouse:delete" }
+    methods:  [POST, DELETE]

@@ -1,0 +1,12 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Order creation</h1>
+
+    {{ form(form) }}
+
+        <div class="record-actions">
+    <a class="button" href="{{ path('order') }}">
+        Back to the list
+    </a>
+        </div>{% endblock %}

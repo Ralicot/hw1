@@ -1,0 +1,29 @@
+    {% extends 'common/app.html.twig' %}
+    {% block header%}<h1>ProductSale list</h1>{% endblock %}
+    {% block content%}
+    <table class="records_list">
+        <thead>
+        <tr>                <th>Id</th>                <th>Active</th>                <th>Startdate</th>                <th>Enddate</th>                <th>Price</th>            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+        <tr>                    <td>
+                        <a href="{{ path('productsale_show', { 'id': entity.id }) }}">
+                            {{ entity.id }}</a>
+                    </td>                    <td>{{ entity.active }}</td>                    <td>{% if entity.startDate %}
+{{ entity.startDate|date('Y-m-d H:i:s') }}
+{% endif %}</td>                    <td>{% if entity.endDate %}
+{{ entity.endDate|date('Y-m-d H:i:s') }}
+{% endif %}</td>                    <td>{{ entity.price }}</td>                    <td><div class="actions">        <a class="button" href="{{ path('productsale_show', { 'id': entity.id }) }}">
+            show
+        </a>        <a class="button" href="{{ path('productsale_edit', { 'id': entity.id }) }}">
+            edit
+        </a></div>                    </td>        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+            <a class="button" href="{{ path('productsale_new') }}">
+            New ProductSale
+        </a>
+        {% endblock %}

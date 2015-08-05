@@ -1,0 +1,30 @@
+order:
+    path:     /
+    defaults: { _controller: "AppBundle:Order:index" }
+
+order_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:Order:show" }
+
+order_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:Order:new" }
+
+order_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:Order:create" }
+    methods:  POST
+
+order_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Order:edit" }
+
+order_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:Order:update" }
+    methods:  [POST, PUT]
+
+order_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:Order:delete" }
+    methods:  [POST, DELETE]

@@ -1,0 +1,13 @@
+{% block extends %}
+    {{ "{% extends 'common/app.html.twig' %}" }}
+{% endblock extends %}
+{% block body %}
+    {{ "{% block header%}" }}
+    <h1>New {{ entity }}</h1>
+    {{ "{% endblock %}" }}
+    {{ "{% block content %}" }}
+    {{ '{{ form(form) }}' }}
+    {% set hide_edit, hide_delete = true, true %}
+    {% include 'crud/views/others/record_actions.html.twig.twig' %}
+    {{ "{% endblock %}" }}
+{% endblock body %}

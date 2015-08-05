@@ -1,9 +1,10 @@
 $(function() {
-    var otherw = $('#dialog-out').dialog({autoOpen: false, modal: true});
+    var otherw = $('<div>').dialog({autoOpen: false, modal: true});
     $('.dialog').click(function (e) {
         console.log('eh');
         e.preventDefault();
-        page = this.href;
+        var page = this.href;
+        console.log(this.href);
         $.ajax({
             url: this.href,
             success: function () {

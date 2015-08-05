@@ -1,0 +1,25 @@
+    {% extends 'common/app.html.twig' %}
+    {% block header%}<h1>Contact list</h1>{% endblock %}
+    {% block content%}
+    <table class="records_list">
+        <thead>
+        <tr>                <th>Id</th>                <th>Name</th>                <th>Email</th>                <th>Mobilephone</th>                <th>Phone</th>            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+        <tr>                    <td>
+                        <a href="{{ path('contact_show', { 'id': entity.id }) }}">
+                            {{ entity.id }}</a>
+                    </td>                    <td>{{ entity.name }}</td>                    <td>{{ entity.email }}</td>                    <td>{{ entity.mobilePhone }}</td>                    <td>{{ entity.phone }}</td>                    <td><div class="actions">        <a class="button" href="{{ path('contact_show', { 'id': entity.id }) }}">
+            show
+        </a>        <a class="button" href="{{ path('contact_edit', { 'id': entity.id }) }}">
+            edit
+        </a></div>                    </td>        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+            <a class="button" href="{{ path('contact_new') }}">
+            New Contact
+        </a>
+        {% endblock %}

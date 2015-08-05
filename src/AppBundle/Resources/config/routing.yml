@@ -1,0 +1,52 @@
+app_warehouse:
+    resource: "@AppBundle/Resources/config/routing/warehouse.yml"
+    prefix:   /warehouse
+
+app_vendor:
+    resource: "@AppBundle/Resources/config/routing/vendor.yml"
+    prefix:   /vendor
+
+app_productsale:
+    resource: "@AppBundle/Resources/config/routing/productsale.yml"
+    prefix:   /productsale
+
+app_productacquisition:
+    resource: "@AppBundle/Resources/config/routing/productacquisition.yml"
+    prefix:   /productacquisition
+
+app_product:
+    resource: "@AppBundle/Resources/config/routing/product.yml"
+    prefix:   /product
+
+app_orderproductline:
+    resource: "@AppBundle/Resources/config/routing/orderproductline.yml"
+    prefix:   /orderproductline
+
+app_order:
+    resource: "@AppBundle/Resources/config/routing/order.yml"
+    prefix:   /order
+
+app_customer:
+    resource: "@AppBundle/Resources/config/routing/customer.yml"
+    prefix:   /customer
+
+app_country:
+    resource: "@AppBundle/Resources/config/routing/country.yml"
+    prefix:   /country
+
+app_contact:
+    resource: "@AppBundle/Resources/config/routing/contact.yml"
+    prefix:   /contact
+
+app_address:
+    resource: "@AppBundle/Resources/config/routing/address.yml"
+    prefix:   /address
+
+app_account:
+    resource: "@AppBundle/Resources/config/routing/account.yml"
+    prefix:   /account
+
+app_category:
+    resource: "@AppBundle/Resources/config/routing/category.yml"
+    prefix:   /category
+

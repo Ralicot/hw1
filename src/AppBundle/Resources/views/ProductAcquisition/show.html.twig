@@ -1,0 +1,45 @@
+{% extends 'common/app.html.twig' %}
+    {% block header %}
+        <h1>ProductAcquisition</h1>
+    {% endblock %}
+    {% block content %}
+        <table class="record_properties">
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>
+                    {{ entity.id }}
+                </td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ entity.date|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Quantity</th>
+                <td>
+                    {{ entity.quantity }}
+                </td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>
+                    {{ entity.price }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="record-actions">
+            <a class="button" href="{{ path('productacquisition') }}">
+                Back to the list
+            </a>
+            <a class="button" href="{{ path('productacquisition_edit',
+            { 'id': entity.id }) }}">
+                Edit
+            </a>
+
+            <div style="float:left">
+                {{ form(delete_form) }}
+            </div>
+            <div style="clear:both"></div>
+        </div>    {% endblock %}

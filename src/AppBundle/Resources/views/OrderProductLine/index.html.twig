@@ -1,0 +1,25 @@
+    {% extends 'common/app.html.twig' %}
+    {% block header%}<h1>OrderProductLine list</h1>{% endblock %}
+    {% block content%}
+    <table class="records_list">
+        <thead>
+        <tr>                <th>Id</th>                <th>Quantity</th>            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+        <tr>                    <td>
+                        <a href="{{ path('orderproductline_show', { 'id': entity.id }) }}">
+                            {{ entity.id }}</a>
+                    </td>                    <td>{{ entity.quantity }}</td>                    <td><div class="actions">        <a class="button" href="{{ path('orderproductline_show', { 'id': entity.id }) }}">
+            show
+        </a>        <a class="button" href="{{ path('orderproductline_edit', { 'id': entity.id }) }}">
+            edit
+        </a></div>                    </td>        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+            <a class="button" href="{{ path('orderproductline_new') }}">
+            New OrderProductLine
+        </a>
+        {% endblock %}

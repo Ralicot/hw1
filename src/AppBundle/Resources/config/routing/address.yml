@@ -1,0 +1,30 @@
+address:
+    path:     /
+    defaults: { _controller: "AppBundle:Address:index" }
+
+address_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:Address:show" }
+
+address_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:Address:new" }
+
+address_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:Address:create" }
+    methods:  POST
+
+address_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Address:edit" }
+
+address_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:Address:update" }
+    methods:  [POST, PUT]
+
+address_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:Address:delete" }
+    methods:  [POST, DELETE]

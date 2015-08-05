@@ -1,0 +1,30 @@
+productsale:
+    path:     /
+    defaults: { _controller: "AppBundle:ProductSale:index" }
+
+productsale_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:ProductSale:show" }
+
+productsale_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:ProductSale:new" }
+
+productsale_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:ProductSale:create" }
+    methods:  POST
+
+productsale_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:ProductSale:edit" }
+
+productsale_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:ProductSale:update" }
+    methods:  [POST, PUT]
+
+productsale_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:ProductSale:delete" }
+    methods:  [POST, DELETE]
