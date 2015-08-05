@@ -1,0 +1,20 @@
+catalog_index:
+  path: /
+  defaults: { _controller: AppBundle:Catalog:index}
+catalog_category_list:
+  path: /category/list
+  defaults: { _controller: AppBundle:Catalog:listCategories}
+catalog_category_show:
+  path: /category/show/{categoryId}
+  defaults: { _controller: AppBundle:Catalog:showCategory}
+catalog_category_edit:
+  path: /category/edit/{categoryId}
+  defaults: { _controller: AppBundle:Catalog:editCategory, categoryId:0}
+  methods: [GET]
+catalog_category_save:
+  path: /category/edit/{categoryId}
+  defaults: { _controller: AppBundle:Catalog:saveCategory, categoryId:0}
+  methods: [POST]
+catalog_category_tree:
+  path: /category/tree
+  defaults: { _controller: AppBundle:Catalog:treeCategories}
