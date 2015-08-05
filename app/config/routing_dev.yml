@@ -16,3 +16,7 @@ _errors:
 
 _main:
     resource: routing.yml
+
+app_dev_phpinfo:
+    path: /_dev/phpinfo
+    defaults: { _controller: AppBundle:Dev:show }
