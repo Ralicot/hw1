@@ -1,0 +1,37 @@
+<form method="post">
+    <input type="hidden" value="{{ category.id }}" />
+    <table border="1">
+        <tr>
+            <td>ID</td>
+            <td>{{ category.id }}</td>
+        </tr>
+        <tr>
+            <td>Label</td>
+            <td>
+                <input type="text" name="label" value="{{ category.label }}" />
+            </td>
+        </tr>
+        <tr>
+            <td>Parent</td>
+            <td>
+                <select name="parent">
+                    <option value="0">No parent</option>
+                    {% for parentCategory in parentCategories %}
+                        {% set selected = '' %}
+                        {% set parentId = 0 %}
+                        {% if category.parent is not null %}
+                            {% set parentId = category.parent.id %}
+                        {% endif %}
+                        {% if parentId == parentCategory.id %}
+                            {% set selected = 'selected' %}
+                        {% endif %}
+                        <option {{ selected }} value="{{ parentCategory.id }}">
+                            {{ parentCategory.label }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="save"/>
+</form>

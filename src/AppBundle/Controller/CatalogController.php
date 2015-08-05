@@ -34,11 +34,15 @@ class CatalogController extends Controller
     }
     public function editCategoryAction($categoryId)
     {
+
+        $request = Request::createFromGlobals();
         $arguments = array(
             'category' => $this->getCategory($categoryId),
             'parentCategories' => $this->getCategories(),
         );
-        return $this->render('catalog/category/edit.html.twig', $arguments);
+
+        if ($request->isXmlHttpRequest())
+            return $this->render('catalog/category/edit.xml.twig', $arguments);
     }
     public function saveCategoryAction($categoryId)
     {
