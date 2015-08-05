@@ -1,4 +1,5 @@
-html.twig' %}" }}
+{% block extends %}
+    {{ "{% extends 'common/app.html.twig' %}" }}
 {% endblock extends %}
 {% block body %}
     {{ "{% block header %}" }}
@@ -7,6 +8,6 @@ html.twig' %}" }}
     {{ "{% block content %}" }}
     {{ '{{ form(edit_form) }}' }}
     {% set hide_edit, hide_delete = true, false %}
-    {% include 'crud/views/others/record_actions.html.twig.twig' %}
+    {% include 'skeleton/crud/views/others/record_actions.html.twig.twig' %}
     {{ "{% endblock %}" }}
 {% endblock body %}
