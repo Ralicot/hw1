@@ -1,0 +1,28 @@
+{% extends '@App/common/app.html.twig' %}
+{% block header %} Categories {% endblock %}
+{% block content %}
+    <table border="1">
+        <tr>
+            <th>#</th><th>Category</th><th colspan="2">Actions</th>
+        </tr>
+        {% for category in categories %}
+            {% set showUrl = path(
+            'catalog_category_show',
+            {'categoryId': category.id})
+            %}
+            {% set editUrl = path(
+            'catalog_category_edit',
+            {'categoryId': category.id})
+            %}
+            <tr>
+                <td>{{ category.id }}</td>
+                <td>{{ category.label }}</td>
+                <td><a href="{{ showUrl }}">Show</a></td>
+                <td><a href="{{ editUrl }}">Edit</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+{% block footer %}
+    <a href="{{ path('catalog_index') }}">Back to catalog</a>
+{% endblock %}
