@@ -7,11 +7,17 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Order
  *
- * @ORM\Table(name="order", indexes={@ORM\Index(name="fk_order_customer_idx", columns={"customer_id"})})
- * @ORM\Entity
+ * @ORM\Table(name="`order`", indexes={@ORM\Index(name="fk_order_customer_idx", columns={"customer_id"})})
+ * @ORM\Entity()
+ * @ORM\HasLifecycleCallbacks
  */
 class Order
 {
+    const STATUS_NEW = 1;
+    const STATUS_PROCESSING = 10;
+    const STATUS_DELIVERED = 20;
+    const STATUS_CANCELLED = 30;
+
     /**
      * @var integer
      *
@@ -44,6 +50,13 @@ class Order
      * })
      */
     private $customer;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="OrderProductLine", mappedBy="order")
+     */
+    private $productLines;
 
 
 
@@ -124,5 +137,31 @@ class Order
     public function getCustomer()
     {
         return $this->customer;
+    }
+
+    public function getProductLines()
+    {
+        return $this->productLines;
+    }
+    public function setProductLines(array $productLines)
+    {
+        $this->productLines = $productLines;
+        return $this;
+    }
+    public function addProductLine(OrderProductLine $productLine)
+    {
+        $productLine->setOrder($this);
+        $this->productLines[] = $productLine;
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        if (!$this->id) {
+            $this->status = self::STATUS_NEW;
+        }
     }
 }

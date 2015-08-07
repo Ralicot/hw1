@@ -1,4 +1,5 @@
-$(function() {
+$(function()
+{
     var otherw = $('<div>').dialog({autoOpen: false, modal: true});
     $('.dialog').click(function (e) {
         console.log('eh');

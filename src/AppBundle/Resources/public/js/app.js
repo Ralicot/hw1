@@ -6,5 +6,5 @@ function setupUi() {
     $('input[type="submit"], .button, #footer a').button();
     $('th').addClass('ui-widget-header');
     $('.tree').menu();
-    };
+};
 

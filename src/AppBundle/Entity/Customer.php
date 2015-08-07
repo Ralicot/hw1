@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Customer
 {
+    const REPOSITORY = 'AppBundle:Customer';
     /**
      * @var integer
      *
@@ -152,5 +153,9 @@ class Customer
     public function getAddress()
     {
         return $this->address;
+    }
+    public function __toString()
+    {
+        return $this->getAccount()->getLogin();
     }
 }

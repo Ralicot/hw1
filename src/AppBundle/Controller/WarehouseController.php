@@ -221,4 +221,8 @@ class WarehouseController extends Controller
             ->getForm()
         ;
     }
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }

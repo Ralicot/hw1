@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ProductSale
 {
+    const REPOSITORY = 'AppBundle:ProductSale';
     /**
      * @var integer
      *
@@ -184,5 +185,9 @@ class ProductSale
     public function getProduct()
     {
         return $this->product;
+    }
+    public function __toString()
+    {
+        return strval($this->getId());
     }
 }

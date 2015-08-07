@@ -15,9 +15,16 @@ class OrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('status')
+
             ->add('createDate')
             ->add('customer')
+            ->add('productLines', new OrderProductLineEmbeddableType(), array(
+                'title' => 'products',
+                'route' => 'productsale_search_by_code',
+                'columns' => array('code', 'title', 'price', 'quantity'),
+                'search' => 'code'
+            ))
+
         ;
     }
     

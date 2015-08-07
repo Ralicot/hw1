@@ -1,0 +1,11 @@
+{% extends 'common/app.html.twig' %}
+
+{%  block content %}
+
+    <h1>Dashboard</h1>
+    {% for entity in entities %}
+
+        <a href={{ path(entity) }}> {{ entity }} </a>
+        <br/>
+{% endfor %}
+{% endblock %}

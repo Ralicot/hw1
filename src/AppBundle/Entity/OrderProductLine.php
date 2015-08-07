@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * OrderProductLine
  *
  * @ORM\Table(name="order_product_line", indexes={@ORM\Index(name="fk_order_product_line_order_idx", columns={"order_id"}), @ORM\Index(name="fk_order_product_line_product_sale_idx", columns={"product_sale_id"})})
- * @ORM\Entity
+ * @ORM\Entity()
  */
 class OrderProductLine
 {
@@ -31,9 +31,9 @@ class OrderProductLine
     /**
      * @var \Order
      *
-     * @ORM\ManyToOne(targetEntity="Order")
+     * @ORM\ManyToOne(targetEntity="Order", inversedBy="productLines")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="order_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="order_id", referencedColumnName="id" )
      * })
      */
     private $order;

@@ -157,4 +157,10 @@ class Account
     {
         return $this->active;
     }
+
+    public function __toString()
+    {
+        return $this->getLogin();
+    }
+
 }

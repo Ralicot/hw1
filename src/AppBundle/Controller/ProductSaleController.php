@@ -4,9 +4,11 @@ namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use AppBundle\Entity\Product;
 use AppBundle\Entity\ProductSale;
 use AppBundle\Form\ProductSaleType;
+use Doctrine\ORM\Query\Expr\Join;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * ProductSale controller.
@@ -220,5 +222,34 @@ class ProductSaleController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+    public function searchByCodeAction(Request $request)
+    {
+        $code = $request->get('term');
+        $entityManager = $this->getDoctrine()->getManager();
+        $repository = $entityManager->getRepository(ProductSale::REPOSITORY);
+        $queryBuilder = $repository->createQueryBuilder('productSale');
+        $products = $queryBuilder
+            ->select('productSale')
+            ->where('product.code like :code')
+            ->andWhere('productSale.active=1')
+            ->innerJoin(
+                Product::REPOSITORY, 'product', Join::WITH, $queryBuilder
+                ->expr()
+                ->eq('product', 'productSale.product')
+            )
+            ->setParameter('code', "$code%")
+            ->getQuery()
+            ->getResult();
+        $response = array();
+        foreach ($products as $productSale) {
+            $response[] = array(
+                'id' => $productSale->getId(),
+                'code' => $productSale->getProduct()->getCode(),
+                'title' => $productSale->getProduct()->getTitle(),
+                'price' => $productSale->getPrice(),
+            );
+        }
+        return new JsonResponse($response);
     }
 }

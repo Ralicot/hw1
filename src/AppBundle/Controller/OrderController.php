@@ -8,6 +8,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Entity\Order;
 use AppBundle\Form\OrderType;
 
+use AppBundle\Entity\Customer;
+use AppBundle\Entity\OrderProductLine;
+use AppBundle\Entity\ProductSale;
+
 /**
  * Order controller.
  *
@@ -35,22 +39,35 @@ class OrderController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new Order();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
+        //echo '<pre>';
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+        $entityManager = $this->getDoctrine()->getManager();
+        $postOrder = $request->get('appbundle_order');
 
-            return $this->redirect($this->generateUrl('order_show', array('id' => $entity->getId())));
+        $quantities = $request->get('quantity');
+        $order = new Order();
+        $order->setCustomer(
+            $entityManager
+                ->getRepository(Customer::REPOSITORY)
+                ->find($postOrder['customer'])
+        );
+
+        foreach ($postOrder['productLines'] as $productSaleId => $value) {
+            $productLine = new OrderProductLine();
+            $productLine->setProductSale(
+                $entityManager
+                    ->getRepository(ProductSale::REPOSITORY)
+                    ->find($productSaleId)
+            );
+            $productLine->setQuantity($quantities[$productSaleId]);
+            $entityManager->persist($productLine);
+            $order->addProductLine($productLine);
         }
-
-        return $this->render('AppBundle:Order:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
+        $entityManager->persist($order);
+        $entityManager->flush();//var_dump($postOrder); die();
+        return $this->redirect(
+            $this->generateUrl('order_show', array('id' => $order->getId()))
+        );
     }
 
     /**
@@ -144,7 +161,7 @@ class OrderController extends Controller
     {
         $form = $this->createForm(new OrderType(), $entity, array(
             'action' => $this->generateUrl('order_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
+            'method' => 'POST',
         ));
 
         $form->add('submit', 'submit', array('label' => 'Update'));
@@ -157,26 +174,61 @@ class OrderController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
+        echo '<pre>';
 
-        $entity = $em->getRepository('AppBundle:Order')->find($id);
+        $entityManager = $this->getDoctrine()->getManager();
+        $postOrder = $request->get('appbundle_order');
 
-        if (!$entity) {
+        $order = $this->getDoctrine()->getRepository('AppBundle:Order')->find($id);
+
+
+        if (!$order) {
             throw $this->createNotFoundException('Unable to find Order entity.');
         }
+        $quantities = $request->get('quantity');
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
+        $order->setCustomer(
+            $entityManager
+                ->getRepository(Customer::REPOSITORY)
+                ->find($postOrder['customer'])
+        );
+        //$order->setProductLines(array());
+        $orderProducts = $order->getProductLines();
 
-        if ($editForm->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('order_edit', array('id' => $id)));
+        foreach ($order->getProductLines() as $line){
+            $entityManager->remove($line);
+            $entityManager->flush();
         }
+        //$order->setProductLines(array());
+        foreach ($postOrder['productLines'] as $productSaleId => $value) {
+                        $productLine = new OrderProductLine();
+                        $productLine->setProductSale(
+                            $entityManager
+                                ->getRepository(ProductSale::REPOSITORY)
+                                ->find($productSaleId)
+                        );
+                        $productLine->setQuantity($quantities[$productSaleId]);
+                        $productLine->setOrder($order);
+                        $order->addProductLine($productLine);
+                        $entityManager->persist($productLine);
+
+            }
+
+
+
+
+        $entityManager->persist($order);
+        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm($order);
+        $editForm->handleRequest($request);
+        $entityManager->flush();
+        return $this->redirect(
+            $this->generateUrl('order_show', array('id' => $order->getId()))
+        );
+
 
         return $this->render('AppBundle:Order:edit.html.twig', array(
-            'entity'      => $entity,
+            'entity'      => $order,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));

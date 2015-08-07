@@ -16,6 +16,7 @@
 
         <div id="header" class="ui-widget-header">
             {% block header %}
+                Product Management App
             {% endblock %}
         </div>
 
@@ -26,10 +27,11 @@
 
         <div id="footer" class="ui-widget-content">
             {% block footer %}
-
+                <a href= {{ path('dashboard') }}> Back to dashboard </a>
             {% endblock %}
         </div>
 
     </div>
 {% endblock %}
+
 
