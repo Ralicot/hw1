@@ -197,23 +197,24 @@ class OrderController extends Controller
 
         foreach ($order->getProductLines() as $line){
             $entityManager->remove($line);
-            $entityManager->flush();
+
         }
         //$order->setProductLines(array());
-        foreach ($postOrder['productLines'] as $productSaleId => $value) {
-                        $productLine = new OrderProductLine();
-                        $productLine->setProductSale(
-                            $entityManager
-                                ->getRepository(ProductSale::REPOSITORY)
-                                ->find($productSaleId)
-                        );
-                        $productLine->setQuantity($quantities[$productSaleId]);
-                        $productLine->setOrder($order);
-                        $order->addProductLine($productLine);
-                        $entityManager->persist($productLine);
+        if(isset($postOrder['productLines'] )) {
+            foreach ($postOrder['productLines'] as $productSaleId => $value) {
+                $productLine = new OrderProductLine();
+                $productLine->setProductSale(
+                    $entityManager
+                        ->getRepository(ProductSale::REPOSITORY)
+                        ->find($productSaleId)
+                );
+                $productLine->setQuantity($quantities[$productSaleId]);
+                $productLine->setOrder($order);
+                $order->addProductLine($productLine);
+                $entityManager->persist($productLine);
 
             }
-
+        }
 
 
 
