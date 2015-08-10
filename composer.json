@@ -22,7 +22,9 @@
         "doctrine/migrations": "1.0.*@dev",
         "doctrine/doctrine-migrations-bundle": "1.0.*",
         "doctrine/mongodb-odm": "1.0.*@dev",
-        "doctrine/mongodb-odm-bundle": "3.0.*@dev"
+        "doctrine/mongodb-odm-bundle": "3.0.*@dev",
+        "doctrine/doctrine-fixtures-bundle": "^2.2",
+        "wa72/jsonrpc-bundle": "^0.5.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

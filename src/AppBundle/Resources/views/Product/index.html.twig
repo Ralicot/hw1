@@ -12,11 +12,12 @@
                 <th>Code</th>
                 <th>Title</th>
                 <th>Description</th>
+                <th>Stocks</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            {% for entity in entities %}
+            {% for entity in entities|slice(0,10) %}
                 <tr>                
                     <td>
                         <a href="{{ path('product_show', { 'id': entity.id }) }}">
@@ -25,7 +26,9 @@
                     </td>                
                     <td>{{ entity.code }}</td>                
                     <td>{{ entity.title }}</td>                
-                    <td>{{ entity.description }}</td>                
+                    <td>{{ entity.description }}</td>
+                    <td>{{ render(controller('AppBundle:Warehouse:productStocks', { 'productId':
+                            entity.id })) }}</td>
                     <td>
                         <div class="actions">    
                             <a class="button" href="{{ path('product_show', { 'id': entity.id }) }}">

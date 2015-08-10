@@ -1,2 +1,6 @@
 imports:
     - { resource: "@AppBundle/Resources/config/services.yml" }
+services:
+    json_rpc:
+        class: AppBundle\Service\JsonRpc
+        arguments: [request]

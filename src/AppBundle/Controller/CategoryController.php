@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use AppBundle\Entity\Category;
 use AppBundle\Form\CategoryType;
+use AppBundle\Service\CatalogService;
 
 /**
  * Category controller.
@@ -22,10 +23,7 @@ class CategoryController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('AppBundle:Category')->findAll();
-
+        $entities = $this->get(CatalogService::ID)->getCategories();
         return $this->render('AppBundle:Category:index.html.twig', array(
             'entities' => $entities,
         ));

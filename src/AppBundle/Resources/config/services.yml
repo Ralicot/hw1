@@ -3,3 +3,19 @@ services:
         class: AppBundle\Event\Listener\SoftDelete
         tags:
             - { name: doctrine.event_listener, event: onFlush }
+
+    app.doctrine_aware:
+        class: AppBundle\Service\AbstractDoctrineAware
+        arguments: [@doctrine, @?logger]
+        abstract: true
+
+    app.warehouse:
+        class: AppBundle\Service\WarehouseService
+        parent: app.doctrine_aware
+
+    app.catalog:
+        class: AppBundle\Service\CatalogService
+        parent: app.doctrine_aware
+
+    app.jsonrpc:
+        class: AppBundle\Service\JsonRpcServer

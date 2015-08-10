@@ -23,7 +23,7 @@ class WarehouseController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Warehouse')->findAll();
+        $entities = $this->get(\AppBundle\Service\WarehouseService::ID)->getAll();
 
         return $this->render('AppBundle:Warehouse:index.html.twig', array(
             'entities' => $entities,
@@ -221,4 +221,13 @@ class WarehouseController extends Controller
             ->getForm()
         ;
     }
+    public function productStocksAction($productId)
+    {
+        $productStocks = $this->get(\AppBundle\Service\WarehouseService::ID)
+            ->getProductStocks($productId);
+        return $this->render('AppBundle:Product:product_stock.html.twig', array(
+            'productStocks' => $productStocks,
+        ));
+    }
+
 }
