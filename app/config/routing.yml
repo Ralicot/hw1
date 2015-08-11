@@ -1,3 +1,6 @@
 app:
     resource: "@AppBundle/Resources/config/routing.yml"
 
+#json_rpc:
+#    path: /jsonrpc
+#    defaults: { _controller: jsonrpc_controller:indexAction }

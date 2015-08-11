@@ -1,3 +1,15 @@
+parameters:
+    jsonrpcs:
+            functions:
+                    getprod:
+                        service:    "app.warehouse"
+                        method:     "getProductStocks"
+                    getall:
+                        service:    "app.warehouse"
+                        method:     "getAll"
+                    getcat:
+                        service:    "app.catalog"
+                        method:     "getCategories"
 services:
     app.listener.soft_delete:
         class: AppBundle\Event\Listener\SoftDelete
@@ -18,4 +30,5 @@ services:
         parent: app.doctrine_aware
 
     app.jsonrpc:
-        class: AppBundle\Service\JsonRpcServer
+        class: AppBundle\Service\JsonRPCService
+        arguments: [%jsonrpcs%]

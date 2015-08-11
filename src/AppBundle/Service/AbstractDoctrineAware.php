@@ -1,8 +1,10 @@
 <?php
 namespace AppBundle\Service;
+
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Monolog\Logger;
+
 class AbstractDoctrineAware
 {
     const ID = 'app.doctrine_aware';

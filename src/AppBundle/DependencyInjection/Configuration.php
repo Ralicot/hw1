@@ -36,7 +36,33 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end();
-
+        $rootNode ->children()
+            ->arrayNode('jsonrpc')
+                ->children()
+                    ->arrayNode('functions')
+                    ->useAttributeAsKey('function')
+                    ->prototype('array')
+                        ->children()
+                        ->scalarNode('service')->end()
+                        ->scalarNode('method')->end()
+                        ->arrayNode('jms_serialization_context')
+                            ->children()
+                            ->arrayNode('groups')
+                                ->beforeNormalization()
+                                ->ifTrue(function ($v) { return is_string($v); })
+                                ->then(function ($v) { return array($v); })
+                            ->end()
+                            ->prototype('scalar')->end()
+        ->end()
+        ->scalarNode('version')->end()
+        ->booleanNode('max_depth_checks')->end()
+        ->end()
+        ->end()
+        ->end()
+        ->end()
+        ->end()
+        ->end()
+        ->end();
         return $treeBuilder;
     }
 

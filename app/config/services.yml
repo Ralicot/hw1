@@ -1,6 +1,12 @@
 imports:
     - { resource: "@AppBundle/Resources/config/services.yml" }
+
+
 services:
-    json_rpc:
-        class: AppBundle\Service\JsonRpc
-        arguments: [request]
+    kernel.listener.json_rpc:
+        class: AppBundle\EventListener\UserRequestListener
+        calls:
+            -   [ setService, [@app.jsonrpc]]
+        tags:
+            -   { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+

@@ -5,6 +5,7 @@ use AppBundle\Entity\Warehouse;
 class WarehouseService extends AbstractDoctrineAware
 {
     const ID = 'app.warehouse';
+
     public function getAll()
     {
         return $this->entityManager
@@ -25,6 +26,10 @@ class WarehouseService extends AbstractDoctrineAware
     }
     public function moveProductStock($productId, $quantity, $fromWarehouseId, $toWarehouseId)
     {
-
+        die('sss');
+    }
+    public function check()
+    {
+        die('sss');
     }
 }
