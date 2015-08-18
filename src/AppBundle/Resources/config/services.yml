@@ -1,6 +1,7 @@
 imports:
     - { resource: listeners.yml }
     - { resource: events.xml }
+    - { resource: email_providers.yml}
 services:
     app.email:
         class: AppBundle\Service\EmailService

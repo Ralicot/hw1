@@ -24,7 +24,7 @@ class EmailService
     public function send(Message $message)
     {
         $this->incrementIndex();
-        $provider = $this->providerIndex[$this->providerIndex];
+        $provider = $this->providers[$this->providerIndex];
 
         return $provider->send($message);
     }
@@ -36,4 +36,5 @@ class EmailService
             $this->providerIndex = 0;
         }
     }
+
 }

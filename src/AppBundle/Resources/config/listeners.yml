@@ -3,6 +3,7 @@ services:
         class: AppBundle\Event\Listener\SoftDelete
         tags:
             - { name: doctrine.event_listener, event: onFlush }
+
     app.order_listener:
         class: AppBundle\Event\Listener\OrderListener
         parent: app.doctrine_aware
@@ -11,3 +12,12 @@ services:
         tags:
             - {name: kernel.event_listener, event: %app.order_before_create%, method: onBeforeCreate}
             - {name: kernel.event_listener, event: %app.order_after_create%,  method: onAfterCreate}
+
+    app.email_listener:
+        class: AppBundle\Event\Listener\EmailListener
+        parent: app.doctrine_aware
+        calls:
+            - [setEmailService, ["@app.email"]]
+        tags:
+            - {name: kernel.event_listener, event: %app.order_after_create%,  method: sendConfirmationEmail}
+

@@ -7,6 +7,7 @@ use AppBundle\Event\Order\OrderBeforeCreate;
 use AppBundle\Service\AbstractDoctrineAware;
 use AppBundle\Service\WarehouseService;
 
+
 class OrderListener extends AbstractDoctrineAware
 {
     /** @var WarehouseService */
@@ -24,11 +25,17 @@ class OrderListener extends AbstractDoctrineAware
         $this->logger->addInfo(
             'Order created', array('orderId' => $event->getOrder()->getId())
         );
+
         $this->warehouseService->reserveProducts($event->getOrder());
+
     }
     public function setWarehouseService(WarehouseService $warehouseService)
     {
         $this->warehouseService = $warehouseService;
         return $this;
     }
+
+
+
+
 }

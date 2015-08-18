@@ -9,7 +9,7 @@
 namespace AppBundle\Communication\Email;
 
 
-class ProviderInterface
+Interface ProviderInterface
 {
-    public function send(Message $message);
+    function send(Message $message);
 }

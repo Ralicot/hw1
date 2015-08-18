@@ -10,7 +10,7 @@ class ServerController extends Controller
 {
     public function handleAction(Request $request, $service)
     {
-        $loggingEnabled =$this->getParameter('enable_json_logging');
+        $loggingEnabled = $this->getParameter('enable_json_logging');
         $logger = $this->get('monolog.logger.jsonrpc');
 
         if($loggingEnabled == 'on') {
