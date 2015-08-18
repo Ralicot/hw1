@@ -46,3 +46,12 @@ assetic:
 
 #swiftmailer:
 #    delivery_address: me@example.com
+
+
+#            formatter: my_formatter
+#services:
+##    my_formatter:
+##        class: JsonRpcBundle\Formatter\CustomFormatter
+#services:
+#    jsonlog:
+#        class:

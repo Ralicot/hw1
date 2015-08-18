@@ -1,0 +1,13 @@
+services:
+    app.listener.soft_delete:
+        class: AppBundle\Event\Listener\SoftDelete
+        tags:
+            - { name: doctrine.event_listener, event: onFlush }
+    app.order_listener:
+        class: AppBundle\Event\Listener\OrderListener
+        parent: app.doctrine_aware
+        calls:
+            - [setWarehouseService, ["@app.warehouse"]]
+        tags:
+            - {name: kernel.event_listener, event: %app.order_before_create%, method: onBeforeCreate}
+            - {name: kernel.event_listener, event: %app.order_after_create%,  method: onAfterCreate}
