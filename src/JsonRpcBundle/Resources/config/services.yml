@@ -1,11 +1,13 @@
-parameters:
-    enable_json_logging: on;
+
 
 services:
     json_rpc.server:
         class: JsonRpcBundle\Server
         calls:
             - [setContainer, ["@service_container"]]
-        arguments: ["@logger", "%enable_json_logging%"]
+
+    json_rpc.logger:
+        class: JsonRpcBundle\Logger
+        arguments: ["@?logger"]
         tags:
-            - { name: monolog.logger, channel: jsonrpc }
+            - { name: monolog.logger, channel: json_rpc }

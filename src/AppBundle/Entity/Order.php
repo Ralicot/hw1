@@ -14,8 +14,13 @@ use Doctrine\ORM\Mapping as ORM;
 class Order
 {
     const REPOSITORY = 'AppBundle:Order';
+
     const STATUS_NEW = 1;
     const STATUS_PROCESSING = 10;
+    const STATUS_PROCESSING_PRODUCTS_MISSING = 11;
+    const STATUS_PROCESSING_PRODUCTS_RESERVED = 14;
+    const STATUS_PROCESSING_PACKAGING = 15;
+    const STATUS_DELIVERY_STARTED = 20;
     const STATUS_DELIVERED = 20;
     const STATUS_CANCELLED = 30;
 

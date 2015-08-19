@@ -163,7 +163,7 @@ class Category
     }
 
     /**
-     * @Assert\True(message = "Parent category cannot be the same as child")
+     * @Assert\IsTrue(message = "Parent category cannot be the same as child")
      */
     public function isNotSameAsParent()
     {

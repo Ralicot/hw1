@@ -56,11 +56,4 @@ swiftmailer:
     spool:     { type: memory }
 
 
-monolog:
-    channel: jsonrpc
-    handlers:
-        json:
-            type:   stream
-            path:   %kernel.logs_dir%/json-rpc-%kernel.environment%.log
-            level:  info
-            channels: jsonrpc
+

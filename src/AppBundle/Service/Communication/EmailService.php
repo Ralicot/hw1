@@ -6,13 +6,14 @@
  * Time: 14:19
  */
 
-namespace AppBundle\Service;
+namespace AppBundle\Service\Communication;
 
 use AppBundle\Communication\Email\Message;
 use AppBundle\Communication\Email\ProviderInterface;
 
 class EmailService
 {
+    const id ='app.email';
     private $providers= array();
     private $providerIndex = -1;
 
@@ -25,7 +26,6 @@ class EmailService
     {
         $this->incrementIndex();
         $provider = $this->providers[$this->providerIndex];
-
         return $provider->send($message);
     }
     private function incrementIndex()

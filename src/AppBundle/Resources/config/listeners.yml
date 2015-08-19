@@ -6,18 +6,27 @@ services:
 
     app.order_listener:
         class: AppBundle\Event\Listener\OrderListener
-        parent: app.doctrine_aware
-        calls:
-            - [setWarehouseService, ["@app.warehouse"]]
+        arguments: [@app.warehouse, @app.delivery]
         tags:
-            - {name: kernel.event_listener, event: %app.order_before_create%, method: onBeforeCreate}
-            - {name: kernel.event_listener, event: %app.order_after_create%,  method: onAfterCreate}
+            - {name: kernel.event_listener, event: %app.order_before_create%,       method: onBeforeCreate}
+            - {name: kernel.event_listener, event: %app.order_after_create%,        method: onAfterCreate}
+            - {name: kernel.event_listener, event: %app.order_reservation_failed%,  method: onReservationFailed}
+            - {name: kernel.event_listener, event: %app.order_products_reserved%,   method: onProductsReserved}
+            - {name: kernel.event_listener, event: %app.order_packaging_start%,     method: onPackagingStart}
+            - {name: kernel.event_listener, event: %app.order_packaging_end%,       method: onPackagingEnd}
+            - {name: kernel.event_listener, event: %app.order_delivery_start%,      method: onDeliveryStart}
+            - {name: kernel.event_listener, event: %app.order_delivery_end%,        method: onDeliveryEnd}
 
-    app.email_listener:
-        class: AppBundle\Event\Listener\EmailListener
-        parent: app.doctrine_aware
-        calls:
-            - [setEmailService, ["@app.email"]]
+    app.communication_listener:
+        class: AppBundle\Event\Listener\OrderCommunicationListener
+        arguments: [@app.communication]
         tags:
-            - {name: kernel.event_listener, event: %app.order_after_create%,  method: sendConfirmationEmail}
-
+            - {name: kernel.event_listener, event: %app.order_after_create%,        method: onAfterCreate}
+            - {name: kernel.event_listener, event: %app.order_invoice_generated%,   method: onInvoiceGenerated}
+            - {name: kernel.event_listener, event: %app.order_delivery_start%,      method: onDeliveryStart}
+            - {name: kernel.event_listener, event: %app.order_delivery_end%,        method: onDeliveryEnd}
+    app.status_subscriber:
+        class: AppBundle\Event\StatusSubscriber
+        arguments: [@logger]
+        tags:
+            - { name: doctrine.event_subscriber }

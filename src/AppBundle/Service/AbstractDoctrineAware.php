@@ -5,7 +5,7 @@ namespace AppBundle\Service;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Monolog\Logger;
-use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AbstractDoctrineAware
 {
@@ -32,11 +32,11 @@ class AbstractDoctrineAware
 
     /**
      *
-     * @var TraceableEventDispatcher
+     * @var EventDispatcherInterface
      */
     protected $eventDispatcher;
 
-    public function __construct(Registry $doctrine, Logger $logger, TraceableEventDispatcher $eventDispatcher)
+    public function __construct(Registry $doctrine, Logger $logger, EventDispatcherInterface $eventDispatcher)
     {
         $this->doctrine = $doctrine;
         $this->entityManager = $doctrine->getManager();

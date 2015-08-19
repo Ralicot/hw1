@@ -13,13 +13,25 @@ imports:
 
 monolog:
     handlers:
+        elasticsearch:
+            type:         elasticsearch
+            elasticsearch:
+                host: localhost
+            level: info
+            channels: [app, json_rpc]
         main:
             type:         fingers_crossed
             action_level: error
             handler:      nested
+            channels:   ["!json_rpc"]
         nested:
             type:  stream
             path:  "%kernel.logs_dir%/%kernel.environment%.log"
             level: debug
         console:
             type:  console
+        json_rpc:
+                    type: stream
+                    path: "%kernel.logs_dir%/json-rpc-%kernel.environment%.log"
+                    level: debug
+                    channels: ["json_rpc"]

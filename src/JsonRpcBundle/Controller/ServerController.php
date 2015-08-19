@@ -1,6 +1,7 @@
 <?php
 namespace JsonRpcBundle\Controller;
 
+use JsonRpcBundle\Logger;
 use JsonRpcBundle\Server;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -10,19 +11,16 @@ class ServerController extends Controller
 {
     public function handleAction(Request $request, $service)
     {
-        $loggingEnabled = $this->getParameter('enable_json_logging');
-        $logger = $this->get('monolog.logger.jsonrpc');
+        $requestContent = $request->getContent();
+        $logger = $this->get(Logger::ID)->getLogger();
+        $logger->addInfo('REQUEST: ', array('content' => $requestContent));
 
-        if($loggingEnabled == 'on') {
-            $logger->info('REQUEST: ' . $request);
-        }
 
         $server = $this->get(Server::ID);
-        $result = $server->handle($request->getContent(), $service);
+        $result = $server->handle($requestContent, $service);
+        $result=$result->toArray();
+        $logger->addInfo("RESPONSE: ", $result);
 
-        if($loggingEnabled == 'on') {
-            $logger->info("RESPONSE: " . json_encode($result->toArray()));
-        }
-        return new JsonResponse($result->toArray());
+        return new JsonResponse($result);
     }
 }

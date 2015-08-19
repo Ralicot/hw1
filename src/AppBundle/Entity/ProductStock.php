@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
  * ProductStock
  *
  * @ORM\Table(
- *  name="product_stock", 
+ *  name="product_stock",
  *  indexes={
- *      @ORM\Index(name="product_stock_product_id_idx", columns={"product_id"}), 
+ *      @ORM\Index(name="product_stock_product_id_idx", columns={"product_id"}),
  *      @ORM\Index(name="product_stock_warehouse_id_idx", columns={"warehouse_id"})
  * })
  * @ORM\Entity
@@ -72,7 +72,7 @@ class ProductStock
     /**
      * Get quantity
      *
-     * @return integer 
+     * @return integer
      */
     public function getQuantity()
     {
@@ -93,9 +93,9 @@ class ProductStock
     }
 
     /**
-     * Get 
+     * Get
      *
-     * @return Warehouse 
+     * @return Warehouse
      */
     public function getWarehouse()
     {
@@ -118,7 +118,7 @@ class ProductStock
     /**
      * Get product
      *
-     * @return Product 
+     * @return Product
      */
     public function getProduct()
     {
