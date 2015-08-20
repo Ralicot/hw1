@@ -3,7 +3,6 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Category;
-use AppBundle\Repository\CategoryRepository;
 
 class CategoryFixtures extends AbstractDataFixture
 {
@@ -38,12 +37,6 @@ class CategoryFixtures extends AbstractDataFixture
         return $category;
     }
 
-    protected function preLoad()
-    {
-        /* @var $categoryRepository CategoryRepository */
-        $categoryRepository = $this->manager->getRepository(Category::REPOSITORY);
-        $categoryRepository->deleteAll();
-    }
 
     public function getOrder()
     {

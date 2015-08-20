@@ -22,7 +22,10 @@ class OrderCommunicationListener
     public function onAfterCreate(OrderEvent $event)
     {
         $emailAddress = $this->getEmailAddress($event);
-        $this->communicationService->sendConfirmationEmail($emailAddress, $event->getOrder()->getId());
+        $customerName = $this->getCustomerName($event);
+        $this->communicationService->sendConfirmationEmail(
+            $emailAddress, $customerName, $event->getOrder()->getId()
+        );
     }
 
     public function onInvoiceGenerated(OrderEvent $event)
@@ -46,6 +49,11 @@ class OrderCommunicationListener
     private function getEmailAddress(OrderEvent $event)
     {
         return $event->getOrder()->getCustomer()->getContact()->getEmail();
+    }
+
+    private function getCustomerName(OrderEvent $event)
+    {
+        return $event->getOrder()->getCustomer()->getContact()->getName();
     }
 
 }

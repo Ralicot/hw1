@@ -1,0 +1,7 @@
+{% extends 'AppBundle:Templates:Email/base.html.twig' %}
+{% block content %}
+    {{ 'confirmation.text'|trans(
+    {'%customerName%': customerName, '%orderNumber%': orderNumber},
+    'email'
+    ) }}
+{% endblock %}

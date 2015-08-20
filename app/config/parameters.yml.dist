@@ -20,3 +20,5 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
     fixtures:
         products_per_category: #number
+
+    communication.external_provider_host: http://127.0.0.1:8888/  #http://

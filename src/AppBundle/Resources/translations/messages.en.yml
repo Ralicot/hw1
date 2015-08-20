@@ -2,5 +2,12 @@ order:
     status:
         1: new
         10: processing
-        20: delivered
+        11: products missing
+        14: products reserved
+        15: packaging
+        20: delivery started
+        29: delivered
         30: cancelled
+
+copyright: copyright
+company_name: the company
