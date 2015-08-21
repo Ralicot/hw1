@@ -49,17 +49,25 @@ class EmailCommunicationListener
             $event->getArguments()
         );
     }
+
+
+
     private function persistEmailMessage(Message $message,$type,$status,$arguments)
     {
-        $email = new Email();
-        $email->setType($type);
-        $email->setBody($message->getMessage());
-        $email->setEmailAddress($message->getTo());
-        $email->setFrom($message->getFrom());
-        $email->setSubject($message->getSubject());
-        $email->setArguments($arguments);
-        $email->setStatus($status);
-        $this->documentManager->persist($email);
-        $this->documentManager->flush();
+
+        $entity = $this->documentManager->getRepository('AppBundle:Email')->findBy(array('arguments.orderNumber' => $arguments['orderNumber']));
+
+        if(!$entity){
+            $email = new Email();
+            $email->setType($type);
+            $email->setBody($message->getMessage());
+            $email->setEmailAddress($message->getTo());
+            $email->setFrom($message->getFrom());
+            $email->setSubject($message->getSubject());
+            $email->setArguments($arguments);
+            $email->setStatus($status);
+            $this->documentManager->persist($email);
+            $this->documentManager->flush();
+        }
     }
 }

@@ -9,13 +9,22 @@ class ExternalProvider implements ProviderInterface
     }
     public function send(Message $message)
     {
+
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+
+        curl_setopt($curl, CURLOPT_TIMEOUT, 1);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_URL, $this->providerHost .
-            '/communication/external_provider');
+            'communication/external_provider');
         $result = curl_exec($curl);
-        curl_close($curl);
+
+
+
+
+        if($result === false || curl_getinfo($curl)['http_code']!=200) {
+            $result = 2;
+        }
+
         return $result;
     }
 }

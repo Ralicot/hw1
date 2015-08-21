@@ -73,6 +73,7 @@ class EmailsRecyclerCommand extends ContainerAwareCommand
             $status = $this->communicationService
                 ->sendEmail($type, $emailAddress, $arguments);
             $email->setStatus($status);
+            $email->setRetryCount($email->getRetryCount()+1);
             $this->documentManager->persist($email);
         }
         $this->documentManager->flush();
