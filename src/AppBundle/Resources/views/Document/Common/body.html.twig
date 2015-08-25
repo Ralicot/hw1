@@ -1,0 +1,22 @@
+<table width="100%">
+    <tr>
+        <th width="10%">{{'code'|trans|capitalize}}</th>
+        <th width="50%">{{'title'|trans|capitalize}}</th>
+        <th width="20%">{{'price'|trans|capitalize}}</th>
+        <th width="10%">{{'quantity'|trans|capitalize}}</th>
+        <th width="10%">{{'subtotal'|trans|capitalize}}</th>
+    </tr>
+    {% for productLine in document.productLines %}
+        {% include 'AppBundle:Document:Common/product-line.html.twig'
+        with {'productLine': productLine, 'currency': document.currency} %}
+    {%endfor%}
+    <tr>
+        <td colspan="2"></td>
+        <td>
+            {{'total'|trans}}
+        </td>
+        <td>
+            {{ document.total|localizedcurrency(document.currency)}}
+        </td>
+    </tr>
+</table>

@@ -97,4 +97,31 @@ class Country
     {
         return $this->getName();
     }
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="currency", type="string", length=3, nullable=false)
+     */
+    private $currency;
+    /**
+     * Set currency
+     *
+     * @param string $currency
+     * @return Country
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+        return $this;
+    }
+    /**
+     * Get currency
+     *
+     * @return string
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
 }

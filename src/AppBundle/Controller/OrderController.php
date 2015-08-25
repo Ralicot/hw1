@@ -10,6 +10,7 @@ use AppBundle\Form\OrderType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Service\Document\DocumentService;
 
 /**
  * Order controller.
@@ -34,40 +35,25 @@ class OrderController extends Controller
     }
 
     /**
-     * Creates a new Order entity.
+     * Creates a new Order.
      *
      */
-    public function createAction(Request $request)
-    {
-        $entityManager = $this->getDoctrine()->getManager();
+    public function createAction(Request $request) {
         $postOrder = $request->get('appbundle_order');
         $quantities = $request->get('quantity');
-
-        $order = new Order();
-
-        $order->setCustomer(
-                $entityManager
-                        ->getRepository(Customer::REPOSITORY)
-                        ->find($postOrder['customer'])
-        );
-
+        /* @var $orderService \AppBundle\Service\OrderService */
+        $orderService = $this->get(\AppBundle\Service\OrderService::ID);
+        $customerId = $postOrder['customer'];
+        $productLines = array();
         foreach ($postOrder['productLines'] as $productSaleId => $value) {
-            $productLine = new OrderProductLine();
-            $productLine->setProductSale(
-                    $entityManager
-                            ->getRepository(ProductSale::REPOSITORY)
-                            ->find($productSaleId)
+            $productLines[] = array(
+                'id' => $productSaleId,
+                'quantity' => $quantities[$productSaleId]
             );
-            $productLine->setQuantity($quantities[$productSaleId]);
-            $entityManager->persist($productLine);
-            $order->addProductLine($productLine);
         }
-
-        $entityManager->persist($order);
-        $entityManager->flush();
-
+        $orderId = $orderService->createOrder($customerId, $productLines);
         return $this->redirect(
-                        $this->generateUrl('order_show', array('id' => $order->getId()))
+            $this->generateUrl('order_show', array('id' => $orderId))
         );
     }
 
@@ -255,6 +241,13 @@ class OrderController extends Controller
                         ->add('submit', 'submit', array('label' => 'Delete'))
                         ->getForm()
         ;
+    }
+
+    public function viewInvoiceAction($orderId) {
+        /* @var $documentService DocumentService */
+        $documentService = $this->get(DocumentService::ID);
+        $html = $documentService->getInvoiceHtml($orderId);
+        return new \Symfony\Component\HttpFoundation\Response($html);
     }
 
 }

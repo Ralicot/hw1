@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new JsonRpcBundle\JsonRpcBundle(),
             new AppBundle\AppBundle(),
             new AccessBundle\AccessBundle(),
+            new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

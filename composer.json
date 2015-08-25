@@ -24,7 +24,8 @@
         "doctrine/mongodb-odm": "1.0.*@dev",
         "doctrine/mongodb-odm-bundle": "3.0.*@dev",
         "doctrine/doctrine-fixtures-bundle": "2.2.0",
-        "ruflin/elastica": "2.1.0"
+        "ruflin/elastica": "2.1.0",
+        "oldsound/rabbitmq-bundle": "^1.7"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

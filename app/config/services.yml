@@ -1,2 +1,7 @@
 imports:
     - { resource: "@AppBundle/Resources/config/services.yml" }
+services:
+    session.handler.mongodb:
+        class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler
+        arguments: [@=service('doctrine_mongodb').getConnection().getMongoClient(),{database: session, collection: sessions}]
+        public: false

@@ -61,3 +61,6 @@ app_communication:
 app_admin:
     resource: "@AppBundle/Resources/config/routing/admin.yml"
     prefix:   /admin
+order_invoice_view:
+    path: /{orderId}/invoice/view
+    defaults: { _controller: "AppBundle:Order:viewInvoice" }

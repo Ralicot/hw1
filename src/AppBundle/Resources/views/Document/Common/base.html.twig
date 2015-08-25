@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+        body {font-size: 12px}
+        #body {margin: 20px 20px}
+        #footer{
+            font-size: 10px;
+            color: #888;
+            border-top: solid 2px #777
+        }
+    </style>
+</head>
+<body>
+<table width="800">
+    <tr>
+        <td>
+            <div id="header">
+                {% block header %}
+                    {% include 'AppBundle:Document:Common/header.html.twig'
+                    with {'document': document} %}
+                {% endblock %}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div id="body">
+                {% block body %}
+                    {% include 'AppBundle:Document:Common/body.html.twig'
+                    with {'document': document} %}
+                {% endblock %}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div id="footer">
+                {% block footer %}
+                    {% include 'AppBundle:Document:Common/footer.html.twig' %}
+                {% endblock %}
+            </div>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

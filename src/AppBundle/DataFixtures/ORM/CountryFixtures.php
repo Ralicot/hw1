@@ -18,10 +18,15 @@ class CountryFixtures extends AbstractDataFixture
 
     protected function createAndPersistData()
     {
-        foreach ($this->countries as $countryCode => $name) {
-            $country = new Country();
-            $country->setCode($countryCode)->setName($name);
-            $this->manager->persist($country);
+        $countryCount = 0;
+        foreach ($this->countries as $code => $country) {
+            $countryCount++;
+            $countryEntity = new Country();
+            $countryEntity->setCode($code)
+                ->setName($country[0])
+                ->setCurrency($country[1]);
+            $this->setReference(sprintf('country_%s', $countryCount), $countryEntity);
+            $this->manager->persist($countryEntity);
         }
     }
 

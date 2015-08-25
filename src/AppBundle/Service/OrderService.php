@@ -18,7 +18,12 @@ class OrderService extends AbstractDoctrineAware
     {
         $this->eventDispatcher->dispatch(OrderEvent::BEFORE_CREATE, new OrderBeforeCreate($customerId, $products));
         $order = new Order();
-        $order->setCustomer($this->doctrine->getRepository(Customer::REPOSITORY)->find($customerId));
+        /* @var $customer Customer */
+        $customer = $this->doctrine->getRepository(Customer::REPOSITORY)->find($customerId);
+        $order->setCustomer($customer);
+        $addresses = $customer->getAddress();
+        $order->setBillingAddress($addresses[0]);
+        $order->setShippingAddress($addresses[1]);
         foreach ($products as $product) {
             $this->createProductLine($order, $product['id'], $product['quantity']);
         }

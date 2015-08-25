@@ -33,10 +33,10 @@ services:
         arguments: [@app.email, @templating, @translator, @event_dispatcher]        
     event_dispatcher:
         class: AppBundle\Event\EventDispatcher
-        arguments: [@service_container]        
-    app.document:
-        class: AppBundle\Service\DocumentService
-        parent: app.doctrine_aware        
+        arguments: [@service_container]
     app.delivery:
         class: AppBundle\Service\DeliveryService
         parent: app.doctrine_aware
+    app.document:
+        class: AppBundle\Service\Document\DocumentService
+        arguments: [@templating, @event_dispatcher, @doctrine_mongodb, @old_sound_rabbit_mq.document_producer]

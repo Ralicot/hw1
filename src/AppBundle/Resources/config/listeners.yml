@@ -5,7 +5,7 @@ services:
                 - { name: doctrine.event_listener, event: onFlush }
     app.order_listener:
         class: AppBundle\Event\Listener\OrderListener
-        arguments: [@app.warehouse, @app.delivery]
+        arguments: [@app.warehouse, @app.delivery, @app.document]
         tags:
             - {name: kernel.event_listener,event:%app.order_before_create%,method:onBeforeCreate}
             - {name: kernel.event_listener,event: %app.order_after_create%,method:onAfterCreate}

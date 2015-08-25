@@ -7,7 +7,7 @@ use AppBundle\Event\Order\OrderBeforeCreate;
 use AppBundle\Event\Order\OrderEvent;
 use AppBundle\Service\DeliveryService;
 use AppBundle\Service\WarehouseService;
-
+use AppBundle\Service\Document\DocumentService;
 class OrderListener
 {
 
@@ -23,10 +23,18 @@ class OrderListener
      */
     private $deliveryService;
 
-    public function __construct(WarehouseService $warehouseService, DeliveryService $deliveryService)
+    /**
+     *
+     * @var DocumentService
+     */
+    private $documentService;
+
+
+    public function __construct(WarehouseService $warehouseService, DeliveryService $deliveryService, DocumentService $documentService)
     {
         $this->warehouseService = $warehouseService;
         $this->deliveryService = $deliveryService;
+        $this->documentService = $documentService;
     }
 
     public function onBeforeCreate(OrderBeforeCreate $event)
@@ -48,6 +56,7 @@ class OrderListener
     {
         $event->getOrder()->setStatus(Order::STATUS_PROCESSING_PRODUCTS_RESERVED);
         $this->warehouseService->packageProducts($event->getOrder());
+        $this->documentService->generateInvoice($event->getOrder());
     }
 
     public function onPackagingStart(OrderEvent $event)

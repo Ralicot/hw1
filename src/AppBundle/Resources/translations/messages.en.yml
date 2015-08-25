@@ -8,6 +8,29 @@ order:
         20: delivery started
         29: delivered
         30: cancelled
+    number: order number
+
+document:
+    invoice:
+        label: invoice
+        number: invoice number
 
 copyright: copyright
-company_name: the company
+company:
+    name: the company
+    phone: +123456789
+    registration_number: RN999-999
+
+phone: phone
+registration_number: registration number
+date: date
+customer: customer
+billing_address: billing address
+
+code: code
+title: title
+price: price
+quantity: quantity
+subtotal: subtotal
+total: total
+date_format: d-m-Y

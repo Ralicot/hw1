@@ -33,7 +33,12 @@
             </tr>
         </tbody>
     </table>
-
+    <div>
+        <a class="button" target="_blank"
+           accesskey=""href="{{ path('order_invoice_view', { 'orderId': entity.id }) }}">
+            view invoice
+        </a>
+    </div>
     <div class="record-actions">
         <a class="button" href="{{ path('order') }}">
             Back to the list

@@ -47,6 +47,45 @@ class Order
      */
     private $createDate;
 
+
+    private $billingAddress;
+
+    /**
+     * @return mixed
+     */
+    public function getBillingAddress()
+    {
+        return $this->billingAddress;
+    }
+
+    /**
+     * @param mixed $billingAddress
+     * @return Order
+     */
+    public function setBillingAddress($billingAddress)
+    {
+        $this->billingAddress = $billingAddress;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShippingAddress()
+    {
+        return $this->shippingAddress;
+    }
+
+    /**
+     * @param mixed $shippingAddress
+     * @return Order
+     */
+    public function setShippingAddress($shippingAddress)
+    {
+        $this->shippingAddress = $shippingAddress;
+        return $this;
+    }
+    private $shippingAddress;
     /**
      * @var \Customer
      *

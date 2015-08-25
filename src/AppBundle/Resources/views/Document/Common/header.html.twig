@@ -1,0 +1,34 @@
+<table width="100%">
+    <tr>
+        <td width="">
+            <img src="{{'company.logo'|trans}}">
+        </td>
+        <td width="200">
+            <div>
+                {{ ('document.' ~ document.type ~ '.label')|trans|upper}}
+            </div>
+            <table>
+                <tr>
+                    <th>{{('document.'~document.type~'.number')|trans|capitalize}}</th>
+                    <td>{{document.number}}</td>
+                </tr>
+                <tr>
+                    <th>{{'order.number'|trans|capitalize}}</th>
+                    <td>{{document.orderNumber}}</td>
+                </tr>
+                <tr>
+                    <th>{{'date'|trans|capitalize}}</th>
+                    <td>{{document.createDate|date('date_format'|trans)}}</td>
+                </tr>
+                <tr>
+                    <th>{{'customer'|trans}}</th>
+                    <td>{{document.customerName}}</td>
+                </tr>
+                <tr>
+                    <th>{{'billing_address'|trans}}</th>
+                    <td>{{document.billingAddress}}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
