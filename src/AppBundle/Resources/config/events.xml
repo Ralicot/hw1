@@ -31,6 +31,8 @@
         type="constant">AppBundle\Event\Communication\Email\EmailEvent::ERROR_PERMANENT</parameter>
         <parameter key="app.email.sent" 
         type="constant">AppBundle\Event\Communication\Email\EmailEvent::SENT</parameter>
+        <parameter key="document.invoice.generate.finish"
+                   type="constant">AppBundle\Event\Document\DocumentEvent::INVOICE_GENERATE_FINISH</parameter>
     </parameters>
 </container>
 

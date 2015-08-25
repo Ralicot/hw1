@@ -2,6 +2,8 @@
 
 namespace AppBundle\Service\Communication;
 
+use AppBundle\Document\Document;
+
 use AppBundle\Communication\Email\Message;
 use AppBundle\Document\Email;
 use AppBundle\Event\Communication\Email\EmailEvent;
@@ -9,7 +11,8 @@ use AppBundle\Event\Communication\Email\EmailSendingEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Templating\EngineInterface as Templating;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
-
+use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
+use Doctrine\ODM\MongoDB\DocumentManager;
 class CommunicationService
 {
 
@@ -39,17 +42,21 @@ class CommunicationService
      */
     private $eventDispatcher;
 
+
+    private $documentManager;
     public function __construct(
             EmailService $emailService,
             Templating $twigEngine,
             Translator $translator,
-            EventDispatcherInterface $eventDispatcher
+            EventDispatcherInterface $eventDispatcher,
+            ManagerRegistry $documentManager
     )
     {
         $this->emailService = $emailService;
         $this->twigEngine = $twigEngine;
         $this->translator = $translator;
         $this->eventDispatcher = $eventDispatcher;
+        $this->documentManager = $documentManager;
     }
 
     public function sendConfirmationEmail($emailAddress, $name, $orderNumber, $locale = 'en')
@@ -65,7 +72,17 @@ class CommunicationService
 
     public function sendInvoice($emailAddress, $orderNumber)
     {
-        
+        var_dump($emailAddress);
+        //$arguments= array( 'orderNumber' => $orderNumber
+
+        //)      ;
+        $document = $this->documentManager->getRepository(Document::REPOSITORY)->findBy(array('orderNumber' => $orderNumber));
+
+        $arguments = array(
+            'document' => $document
+        );
+        $this->sendEmail('invoice',$emailAddress,$arguments);
+
     }
 
     public function sendSatisfactionSurvey($emailAddress, $orderNumber)
@@ -99,8 +116,16 @@ class CommunicationService
 
     private function renderTempalate($type, $arguments)
     {
-        $templateName = sprintf('AppBundle:Templates:Email/%s.html.twig', $type);
-        return $this->twigEngine->render($templateName, $arguments);
+        if($type == 'invoice')
+        {
+            $templateName = sprintf('AppBundle:Document:invoice.html.twig');
+            return $this->twigEngine->render($templateName, $arguments);
+        }
+        else
+        {
+            $templateName = sprintf('AppBundle:Templates:Email/%s.html.twig', $type);
+            return $this->twigEngine->render($templateName, $arguments);
+        }
     }
 
     private function getSubject($type, $arguments)

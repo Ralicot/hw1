@@ -30,7 +30,7 @@ services:
             - ["addProvider", [@app.provider_email_external]] 
     app.communication:
         class: AppBundle\Service\Communication\CommunicationService
-        arguments: [@app.email, @templating, @translator, @event_dispatcher]        
+        arguments: [@app.email, @templating, @translator, @event_dispatcher, @doctrine_mongodb]
     event_dispatcher:
         class: AppBundle\Event\EventDispatcher
         arguments: [@service_container]

@@ -3,6 +3,8 @@ namespace AppBundle\Event\Document;
 use AppBundle\Document\Document;
 use AppBundle\Event\LoggableEventInterface;
 use Symfony\Component\EventDispatcher\Event;
+
+
 class DocumentEvent extends Event implements LoggableEventInterface
 {
     const INVOICE_GENERATE_START = 'document.invoice.generate.start';
@@ -20,5 +22,20 @@ class DocumentEvent extends Event implements LoggableEventInterface
             'documentId' => $this->document->getId(),
             'orderNumber' => $this->document->getOrderNumber()
         );
+    }
+    public function getPdfBody()
+    {
+        return $this->document->getBodyPdf();
+    }
+    public function getOrderNumber()
+    {
+        return $this->document->getOrderNumber();
+    }
+
+    public function getEmail()
+    {
+        $customer = $this->document->getCustomerName();
+
+
     }
 }

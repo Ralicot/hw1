@@ -44,7 +44,7 @@ class DocumentService
         Templating $twigEngine,
         EventDispatcherInterface $eventDispatcher,
         ManagerRegistry $documentManager,
-    Producer $documentProducer
+        Producer $documentProducer
     ) {
         $this->twigEngine = $twigEngine;
         $this->eventDispatcher = $eventDispatcher;

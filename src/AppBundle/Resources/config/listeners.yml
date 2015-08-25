@@ -31,3 +31,8 @@ services:
             - {name: kernel.event_listener,event: %app.email.error_temporary%,method:onTemporaryError}
             - {name: kernel.event_listener,event: %app.email.error_permanent%,method:onPermanentError}
             - {name: kernel.event_listener,event: %app.email.sent%,method:onEmailSent}
+    app.invoice_listener:
+        class: AppBundle\Event\Listener\InvoiceListener
+        arguments: [@app.communication, @doctrine.orm.entity_manager]
+        tags:
+            - {name: kernel.event_listener, event: %document.invoice.generate.finish%, method:sendInvoice }
