@@ -25,9 +25,10 @@ services:
     warehouse: @app.warehouse    
     app.email:
         class: AppBundle\Service\Communication\EmailService
-        public: false
+
         calls:
-            - ["addProvider", [@app.provider_email_external]] 
+            - ["addProvider", [@app.provider_email_external]]
+        arguments: [@doctrine_mongodb]
     app.communication:
         class: AppBundle\Service\Communication\CommunicationService
         arguments: [@app.email, @templating, @translator, @event_dispatcher, @doctrine_mongodb, @doctrine, @old_sound_rabbit_mq.email_producer]

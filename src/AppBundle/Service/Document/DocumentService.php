@@ -118,6 +118,7 @@ class DocumentService
         $templateName = 'AppBundle:Document:invoice.html.twig';
         $html = $this->twigEngine->render($templateName, array('document' => $document));
         $document->setBodyHtml($html);
+        var_dump('aici');
         $document->setBodyPdf($this->convertHtmlToPdf($html));
         $this->documentManager->flush();
         $this->eventDispatcher->dispatch(
