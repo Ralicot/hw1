@@ -7,7 +7,7 @@ services:
         class: AppBundle\Event\Listener\OrderListener
         arguments: [@app.warehouse, @app.delivery, @app.document]
         tags:
-            - {name: kernel.event_listener,event:%app.order_before_create%,method:onBeforeCreate}
+            - {name: kernel.event_listener,event: %app.order_before_create%,method:onBeforeCreate}
             - {name: kernel.event_listener,event: %app.order_after_create%,method:onAfterCreate}
             - {name: kernel.event_listener,event: %app.order_reservation_failed%,method:onReservationFailed}
             - {name: kernel.event_listener,event: %app.order_products_reserved%,method:onProductsReserved}

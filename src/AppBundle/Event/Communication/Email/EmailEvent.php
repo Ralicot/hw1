@@ -8,6 +8,8 @@ use Symfony\Component\EventDispatcher\Event;
 class EmailEvent extends Event implements LoggableEventInterface
 {
 
+    const PUBLISH_START = 'email.publish_start';
+    const PUBLISH_END= 'email.publish_finish';
     const BEFORE_SEND = 'email.before_send';
     const ERROR_TEMPORARY = 'email.error_temporary';
     const ERROR_PERMANENT = 'email.error_permanent';

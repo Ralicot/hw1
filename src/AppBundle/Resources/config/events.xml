@@ -33,6 +33,10 @@
         type="constant">AppBundle\Event\Communication\Email\EmailEvent::SENT</parameter>
         <parameter key="document.invoice.generate.finish"
                    type="constant">AppBundle\Event\Document\DocumentEvent::INVOICE_GENERATE_FINISH</parameter>
+        <parameter key="app.email.before_publish"
+                   type="constant">AppBundle\Event\Communication\Email\EmailEvent::PUBLISH_START</parameter>
+        <parameter key="app.email.after_publish"
+                   type="constant">AppBundle\Event\Communication\Email\EmailEvent::PUBLISH_END</parameter>
     </parameters>
 </container>
 

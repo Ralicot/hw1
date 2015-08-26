@@ -30,7 +30,8 @@ services:
             - ["addProvider", [@app.provider_email_external]] 
     app.communication:
         class: AppBundle\Service\Communication\CommunicationService
-        arguments: [@app.email, @templating, @translator, @event_dispatcher, @doctrine_mongodb]
+        arguments: [@app.email, @templating, @translator, @event_dispatcher, @doctrine_mongodb, @doctrine, @old_sound_rabbit_mq.email_producer]
+
     event_dispatcher:
         class: AppBundle\Event\EventDispatcher
         arguments: [@service_container]

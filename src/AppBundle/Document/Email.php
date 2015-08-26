@@ -11,7 +11,8 @@ class Email
 {
 
     const REPOSITORY = 'AppBundle:Email';
-    
+
+    const STATUS_STASHED = 0;
     const STATUS_SENT = 1;
     const STATUS_TEMPORARY_ERROR = 2;
     const STATUS_PERMANENT_ERROR = 3;

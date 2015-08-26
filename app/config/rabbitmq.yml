@@ -14,9 +14,17 @@ old_sound_rabbit_mq:
         document:
             connection: default
             exchange_options: {name: 'document', type: direct}
+        email:
+            connection: default
+            exchange_options: {name: 'email', type: direct}
     consumers:
         document.invoice:
             connection: default
             exchange_options: {name: 'document', type: direct}
             queue_options: {name: 'document.invoice', routing_keys: [document.invoice]}
             callback: app.document
+        email.message:
+            connection: default
+            exchange_options: {name: 'email', type: direct}
+            queue_options: {name: 'email.message', routing_keys: [email.message]}
+            callback: app.communication

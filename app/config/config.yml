@@ -67,3 +67,12 @@ services:
         public: false
         tags:
         - { name: twig.extension }
+
+monolog:
+    channels: ['email']
+    handlers:
+        email:
+            level: info
+            type: stream
+            path: %kernel.logs_dir%/emails
+            channels: ['email']

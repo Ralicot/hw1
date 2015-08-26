@@ -6,13 +6,17 @@ use AppBundle\Document\Document;
 
 use AppBundle\Communication\Email\Message;
 use AppBundle\Document\Email;
+use AppBundle\Entity\Order;
 use AppBundle\Event\Communication\Email\EmailEvent;
 use AppBundle\Event\Communication\Email\EmailSendingEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Templating\EngineInterface as Templating;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use OldSound\RabbitMqBundle\RabbitMq\Producer;
+use PhpAmqpLib\Message\AMQPMessage;
+
 class CommunicationService
 {
 
@@ -42,14 +46,31 @@ class CommunicationService
      */
     private $eventDispatcher;
 
+    /**
+     * @var Registry
+     */
+    private $doctrine;
+
+    /**
+     * @var ManagerRegistry
+     */
 
     private $documentManager;
+
+    /**
+     * @var Producer
+     */
+    private $emailProducer;
+
     public function __construct(
             EmailService $emailService,
             Templating $twigEngine,
             Translator $translator,
             EventDispatcherInterface $eventDispatcher,
-            ManagerRegistry $documentManager
+            ManagerRegistry $documentManager,
+            Registry $doctrine,
+            Producer $emailProducer
+
     )
     {
         $this->emailService = $emailService;
@@ -57,6 +78,8 @@ class CommunicationService
         $this->translator = $translator;
         $this->eventDispatcher = $eventDispatcher;
         $this->documentManager = $documentManager;
+        $this->doctrine = $doctrine;
+        $this->emailProducer = $emailProducer;
     }
 
     public function sendConfirmationEmail($emailAddress, $name, $orderNumber, $locale = 'en')
@@ -72,16 +95,14 @@ class CommunicationService
 
     public function sendInvoice($emailAddress, $orderNumber)
     {
-        var_dump($emailAddress);
-        //$arguments= array( 'orderNumber' => $orderNumber
 
-        //)      ;
-        $document = $this->documentManager->getRepository(Document::REPOSITORY)->findBy(array('orderNumber' => $orderNumber));
+        $order  = $this->doctrine->getRepository(Order::REPOSITORY)->find($orderNumber);
+        $customer = $order->getCustomer();
+        $name = $customer->getContact()->getName();
 
-        $arguments = array(
-            'document' => $document
-        );
-        $this->sendEmail('invoice',$emailAddress,$arguments);
+        $arguments = array('customerName'=> $name, 'orderNumber' => $orderNumber );
+
+        return $this->sendEmail('invoice',$emailAddress,$arguments);
 
     }
 
@@ -92,14 +113,14 @@ class CommunicationService
 
     public function sendEmail($type, $emailAddress, $arguments, $locale = 'en')
     {
-        $this->eventDispatcher->dispatch(
-            EmailEvent::BEFORE_SEND, new EmailEvent($type, $emailAddress, $arguments)
-        );
         $this->translator->setLocale($locale);
         $message = $this->constructEmailMessage($type, $emailAddress, $arguments);
-        $status = $this->emailService->send($message);
-        $this->dispatchEmailSendingEvent($type, $arguments, $message, $status);
-        return $status;
+        $this->dispatchEmailSendingEvent($type,$arguments,$message,Email::STATUS_STASHED);
+        $email = $this->documentManager->getRepository(Email::REPOSITORY)->findOneBy(array('type'=>$type, 'arguments' => $arguments));
+        var_dump($email->getId());
+        $this->emailProducer->publish($email->getId(), 'email.message');
+
+        return Email::STATUS_STASHED;
     }
     
     private function dispatchEmailSendingEvent($type, $arguments, $message, $status)
@@ -107,6 +128,7 @@ class CommunicationService
         $event = new EmailSendingEvent($type, $arguments, $message);
 
         $eventNames = array(
+            Email::STATUS_STASHED => EmailSendingEvent::BEFORE_SEND,
             Email::STATUS_SENT => EmailSendingEvent::SENT,
             Email::STATUS_TEMPORARY_ERROR => EmailSendingEvent::ERROR_TEMPORARY,
             Email::STATUS_PERMANENT_ERROR => EmailSendingEvent::ERROR_PERMANENT
@@ -116,10 +138,10 @@ class CommunicationService
 
     private function renderTempalate($type, $arguments)
     {
-        if($type == 'invoice')
+        if($type === 'invoice')
         {
-            $templateName = sprintf('AppBundle:Document:invoice.html.twig');
-            return $this->twigEngine->render($templateName, $arguments);
+            $document = $this->documentManager->getRepository(Document::REPOSITORY)->findOneBy(array('orderNumber' => $arguments['orderNumber']));
+            return $document->getBodyHtml();
         }
         else
         {
@@ -148,6 +170,21 @@ class CommunicationService
         $message->setSubject($this->getSubject($type, $arguments));
         $message->setFrom($this->getFrom($type));
         return $message;
+    }
+
+
+    public function execute(AMQPMessage $amqpMessage)
+    {
+        $emailId = $amqpMessage->body;
+        $repository = $this->documentManager->getRepository(Email::REPOSITORY);
+        $email = $repository->find($emailId);
+        $message = $this->constructEmailMessage($email->getType(),$email->getEmailAddress(),$email->getArguments());
+        $status = $this->emailService->send($message);
+        $this->dispatchEmailSendingEvent($email->getType(), $email->getArguments(), $message, $status);
+
+
+
+        return true;
     }
 
 }

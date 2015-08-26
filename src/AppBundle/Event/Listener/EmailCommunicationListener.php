@@ -23,9 +23,14 @@ class EmailCommunicationListener
         $this->documentManager = $registry->getManager();
     }
 
-    public function onBeforeSend(EmailEvent $event)
+    public function onBeforeSend(EmailSendingEvent $event)
     {
-
+        $this->persistEmailMessage(
+            $event->getMessage(),
+            $event->getType(),
+            Email::STATUS_STASHED,
+            $event->getArguments()
+        );
     }
 
     public function onEmailSent(EmailSendingEvent $event)
